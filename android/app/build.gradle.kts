@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.flutter_local_notofication_application"
     compileSdk = 35
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
