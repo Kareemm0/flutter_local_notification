@@ -44,6 +44,28 @@ class HomeScreen extends StatelessWidget {
                 icon: Icon(Icons.cancel, color: Colors.red),
               ),
             ),
+            //! 3- Schedule Notification Button
+            ListTile(
+              onTap: () {
+                LocalNotificationService.scheduledNotification();
+              },
+              title: Text('Scheduled Notification'),
+              leading: Icon(Icons.notifications),
+              trailing: IconButton(
+                onPressed: () {
+                  LocalNotificationService.cancelNotification(2);
+                },
+                icon: Icon(Icons.cancel, color: Colors.red),
+              ),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                LocalNotificationService.flutterLocalNotificationsPlugin
+                    .cancelAll();
+              },
+              child: Text("Cancel All "),
+            ),
           ],
         ),
       ),
