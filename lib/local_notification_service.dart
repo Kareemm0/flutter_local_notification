@@ -17,14 +17,21 @@ class LocalNotificationService {
       onDidReceiveNotificationResponse: onTab,
       onDidReceiveBackgroundNotificationResponse: onTab,
     );
+
+    //! Request Permission for Android 13+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.requestNotificationsPermission();
   }
 
   //! 2 - Basic Notification
   static void showNotification() async {
     NotificationDetails details = NotificationDetails(
       android: AndroidNotificationDetails(
-        "id 1 ",
-        "basic ",
+        "id1",
+        "basic",
         importance: Importance.max,
         priority: Priority.high,
       ),
@@ -39,12 +46,11 @@ class LocalNotificationService {
   }
 
   //! 3 - Repeated Notification
-
   static void reapeatedNotification() async {
     NotificationDetails details = NotificationDetails(
       android: AndroidNotificationDetails(
-        "id 1 ",
-        "Repeated Notification ",
+        "id1",
+        "Repeated Notification",
         importance: Importance.max,
         priority: Priority.high,
       ),
