@@ -37,6 +37,9 @@ class LocalNotificationService {
         "basic",
         importance: Importance.max,
         priority: Priority.high,
+        sound: RawResourceAndroidNotificationSound(
+          "sound.wav".split('.').first,
+        ),
       ),
     );
     await flutterLocalNotificationsPlugin.show(
