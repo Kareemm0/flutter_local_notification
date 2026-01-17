@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -7,8 +8,14 @@ class LocalNotificationService {
   //! 1 - Setup
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+  static StreamController<NotificationResponse> streamController =
+      StreamController();
+  static onTab(NotificationResponse details) {
+    // log(details.id!.toString());
+    // log(details.payload!.toString());
 
-  static onTab(NotificationResponse details) {}
+    streamController.add(details);
+  }
 
   static Future<void> init() async {
     InitializationSettings settings = InitializationSettings(
@@ -97,7 +104,7 @@ class LocalNotificationService {
       //tz.TZDateTime(tz.local, 2026, 1, 7, 19, 26),
       tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)),
       details,
-      payload: "Notification Payload",
+      payload: "Notification Payload Schedule",
       androidScheduleMode: AndroidScheduleMode.alarmClock,
     );
   }

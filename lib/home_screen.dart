@@ -1,8 +1,33 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notofication_application/local_notification_service.dart';
+import 'package:flutter_local_notofication_application/notification_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  void listenToNotificationStream() {
+    LocalNotificationService.streamController.stream.listen((event) {
+      log(event.id!.toString());
+      log(event.payload!.toString());
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => NotificationScreen(response: event)),
+      );
+    });
+  }
+
+  @override
+  void initState() {
+    listenToNotificationStream();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
