@@ -6,7 +6,7 @@ class WorkManagerService {
     await Workmanager().registerPeriodicTask(
       "id1",
       "Show Simple Notification",
-      frequency: Duration(seconds: 15),
+      frequency: Duration(minutes: 15),
     );
   }
 
@@ -24,7 +24,11 @@ class WorkManagerService {
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) {
-    LocalNotificationService.showNotification();
+    LocalNotificationService.dailyNotification();
     return Future.value(true);
   });
 }
+
+
+//1. Schedule Notification at 9 pm
+//2. execute for this notification 

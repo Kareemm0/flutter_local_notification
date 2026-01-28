@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -103,6 +104,44 @@ class LocalNotificationService {
       "Scheduled Body",
       //tz.TZDateTime(tz.local, 2026, 1, 7, 19, 26),
       tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)),
+      details,
+      payload: "Notification Payload Schedule",
+      androidScheduleMode: AndroidScheduleMode.alarmClock,
+    );
+  }
+
+  //! 6 - Daily Notification
+  static void dailyNotification() async {
+    NotificationDetails details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        "id4",
+        "Daily Notification",
+        importance: Importance.max,
+        priority: Priority.high,
+      ),
+    );
+    tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('Africa/Cairo'));
+    var currentTime = tz.TZDateTime.now(tz.local);
+    var scheduleTime = tz.TZDateTime(
+      tz.local,
+      currentTime.year,
+      currentTime.month,
+      currentTime.day,
+      17,
+    );
+
+    if (scheduleTime.isBefore(currentTime)) {
+      scheduleTime = scheduleTime.add(Duration(days: 1));
+      log("$scheduleTime");
+    }
+    log("$scheduleTime");
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      3,
+      "Daily Title",
+      "Daily Body",
+      scheduleTime,
+      // tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)),
       details,
       payload: "Notification Payload Schedule",
       androidScheduleMode: AndroidScheduleMode.alarmClock,
